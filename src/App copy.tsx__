@@ -1,0 +1,138 @@
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { ItemProvider } from "./components/item/ItemContext";
+import { BrowserRouter, Link } from "react-router-dom";
+import { AuthProvider } from "./components/auth/AuthContext";
+import { Router } from "./routes";
+// import { isAuthenticated } from "./components/auth/AuthService";
+import jwtDecode from "jwt-decode";
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #333;
+  color: #fff;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const onLogoutClick = (e: { preventDefault: () => void }) => {
+  e.preventDefault();
+  sessionStorage.removeItem("authToken");
+  window.location.replace("/");
+};
+
+// const isAuthenticated = (token: string): boolean => {
+//   console.log("token in authService", token);
+//   console.log(
+//     'sessionStorage.getItem("authToken")',
+//     sessionStorage.getItem("authToken")
+//   );
+
+//   // const token2 = sessionStorage.getItem("authToken"); //this works
+//   // if (token2) {//this works
+//   if (token) {
+//     //this doesn't works
+//     return true;
+//   } else {
+//     return false;
+//   }
+//   // return  token ? true : false;
+
+//   // if (token) {
+//   //   const decodedToken: any = jwtDecode(token);
+
+//   //   if (decodedToken && typeof decodedToken.exp === "number") {
+//   //     const currentTime = Date.now() / 1000;
+
+//   //     if (decodedToken.exp < currentTime) {
+//   //       console.log("Token has expired");
+//   //       return false;
+//   //     }
+
+//   //     return true;
+//   //   } else {
+//   //     console.log("Invalid token");
+//   //     return false;
+//   //   }
+//   // } else {
+//   //   console.log("No token");
+//   //   return false;
+//   // }
+// };
+
+const App: React.FC = () => {
+  // const { authState } = useContext(AuthContext);
+
+  // console.log("authState in App:", authState);
+  // console.log("authState.isLoggedIn in App:", authState.isLoggedIn);
+
+  /**
+   * above use of isLoggedIn doesn't work. Therefore use the below service that takes
+   * sessionStorage token to determine the authentications. RnD done, it is the correct method
+   *  */
+
+  const [authToken, setAuthToken] = useState("");
+
+  useEffect(() => {
+    const authToken = String(sessionStorage.getItem("authToken"));
+    setAuthToken(authToken);
+
+    const isAuthenticated = (): boolean => {
+      console.log("token in isAuthenticated", authToken);
+
+      if (authToken) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    console.log("authToken in App useEffect:", authToken);
+    console.log("isAuthenticated in App:", isAuthenticated());
+  }, []);
+
+  // console.log("authToken in App:", authToken);
+
+  return (
+    <ItemProvider>
+      <AuthProvider
+        initialAuthState={{
+          authToken: authToken,
+          error: null,
+          isLoading: false,
+          isLoggedIn: false,
+        }}
+      >
+        <BrowserRouter>
+          <Nav>
+            <Link to="/">Home</Link>
+            {isAuthenticated(authToken) ? (
+              <Link to="/items">Item List</Link>
+            ) : (
+              ""
+            )}
+            {/* {isAuthenticated(authToken) ? (
+              <a href="/" onClick={onLogoutClick}>Logout</a>
+            ) : (
+              <Link to="/login">Login</Link>
+            )} */}
+          </Nav>
+          <Router />
+        </BrowserRouter>
+      </AuthProvider>
+    </ItemProvider>
+  );
+};
+
+export default App;

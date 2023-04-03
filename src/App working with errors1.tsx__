@@ -22,24 +22,6 @@ import { CartProvider } from "./components/cart/CartContext";
 // import Cart from "./components/cart/cart";
 // import Add from "./components/item/Add";
 
-const Nav = styled.nav`
-  display: flex;
-  justify-content: center;
-  margin: 1rem;
-  & > * {
-    margin: 0 0.5rem;
-  }
-`;
-
-// const RouteNotFoundOrAccessible = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   height: 100vh;
-//   background-color: #ff5733;
-// `;
-
 const App: React.FC = () => {
   // const { authState, dispatch } = useContext(AuthContext); //no need to do this since we have already used a custom hook for this and get as below
 
@@ -71,11 +53,9 @@ const App: React.FC = () => {
        * This approach ensures that a re-render is not triggered unnecessarily, especially
        * if isLoggedIn is already set to the value you try to set.
        */
-      // setIsLoggedIn((prevValue) => true); //Error: Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
-      setIsLoggedIn(true);
+      setIsLoggedIn((prevValue) => true);
     } else {
-      // setIsLoggedIn((prevValue) => false); //Error: Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
-      setIsLoggedIn(false);
+      setIsLoggedIn((prevValue) => false);
     }
 
     return () => {
@@ -113,6 +93,24 @@ const App: React.FC = () => {
      */
     setIsLoggedIn((prevValue) => false);
   };
+
+  const Nav = styled.nav`
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    & > * {
+      margin: 0 0.5rem;
+    }
+  `;
+
+  // const RouteNotFoundOrAccessible = styled.div`
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   justify-content: center;
+  //   height: 100vh;
+  //   background-color: #ff5733;
+  // `;
 
   // interface PrivateRouteProps {
   //   path: string;
