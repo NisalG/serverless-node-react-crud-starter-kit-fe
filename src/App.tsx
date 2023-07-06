@@ -22,6 +22,8 @@ import { CartProvider } from "./components/cart/CartContext";
 // import Cart from "./components/cart/cart";
 // import Add from "./components/item/Add";
 
+
+
 const Nav = styled.nav`
   display: flex;
   justify-content: center;
@@ -194,7 +196,7 @@ const App: React.FC = () => {
               <Link to="/">Home</Link>
               {/* {isAuthenticated() ? ( */}
               <>
-                <Link to="/items">Item List</Link>
+                <Link to="/items">Items</Link>
                 <Link to="/store">Store</Link>
                 <Link to="/cart">Cart</Link>
                 <button onClick={handleLogout}>Logout</button>

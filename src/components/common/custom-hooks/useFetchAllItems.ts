@@ -28,7 +28,7 @@ const useFetchAllItems = ({
       dispatch({ type: requestDispatchType });
 
       try {
-        const response = await axios.get(`${apiUrl}/api/products`, {
+        const response = await axios.get(`${apiUrl}/items`, {
           headers: addAuthTokenToHeaders({}),
           cancelToken: source.token,
         });

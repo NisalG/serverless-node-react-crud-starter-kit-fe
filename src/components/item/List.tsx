@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { addAuthTokenToHeaders } from "../auth/AuthService";
 import Item from "../common/Item- without useMemo and useCallBack";
-import useFetchAllItems from '../common/custom-hooks/useFetchAllItems with useMemo and useCallBack-not working';
+import useFetchAllItems from '../common/custom-hooks/useFetchAllItems';
 
 const AppContainer = styled.div`
   display: flex;

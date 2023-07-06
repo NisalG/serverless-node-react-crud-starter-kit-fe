@@ -8,8 +8,9 @@ import Home from "./components/home/home";
 import { AuthContext } from "./components/auth/AuthContext";
 import { useContext } from "react";
 import styled from "styled-components";
-import Cart from "./components/cart/cart";
+// import Cart from "./components/cart/cart";
 import Store from "./components/store/Store";
+import CartCheckout from "./components/cart/cart";
 
 const RouteNotFoundOrAccessible = styled.div`
   display: flex;
@@ -82,7 +83,7 @@ export const routes = [
   {
     path: "/cart",
     // element: <PrivateRoute path={"/cart"} element={<Cart />} />,
-    element: <Cart />,
+    element: <CartCheckout />,
   },
   {
     path: "*",
